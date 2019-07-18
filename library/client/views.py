@@ -1,19 +1,13 @@
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import ListModelMixin
 
 from .models import User
 from .serializers import UserSerializer
 
 
-class UserView(APIView):
-    def get(self, request):
-        users = User.objects.all()
-        serializer = UserSerializer(users, many=True)
-        return Response({'users': serializer.data})
+class UserView(ListModelMixin, GenericAPIView):
+    queryset = Uesr.objects.all()
+    serializer_class = UserSerializer
 
-    def post(self, request):
-        name = request.data.get('nane')
-        serializer = UserSerializer(data=name)
-        if serializer.is_valid(raise_exception=True):
-            user_saved = serializer.save()
-        return Response({'success': 'User "{}" created successfully'.format(user_saved.name)})
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
