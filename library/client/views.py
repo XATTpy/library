@@ -1,13 +1,17 @@
-from rest_framework.generics import GenericAPIView
-from rest_framework.mixins import ListModelMixin
+from rest_framework.generics import get_object_or_404, ListCreateAPIView, RetrieveAPIView
 
-from .models import User
+from .models import User, Book
 from .serializers import UserSerializer
 
 
-class UserView(ListModelMixin, GenericAPIView):
-    queryset = Uesr.objects.all()
+class UserView(ListCreateAPIView):
+    queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+    def perform_create(self, serializer):
+        return serializer.save()
+
+
+class SingleUserView(RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
