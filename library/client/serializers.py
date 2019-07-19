@@ -3,15 +3,13 @@ from rest_framework import serializers
 from .models import User, Book
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    books = serializers.StringRelatedField(many=True)
-
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['name', 'id', 'books']
+        fields = ['name', 'id']
 
 
-class BookSerializer(serializers.HyperlinkedModelSerializer):
+class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = ['title', 'summary', 'owner']
+        fields = ['title', 'summary']
