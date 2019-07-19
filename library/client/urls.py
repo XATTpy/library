@@ -5,9 +5,9 @@ from .views import UserList, UserBooks, BookDetail
 
 
 urlpatterns = [
-    path('', UserList.as_view(), name='Users'),
-    path('<int:pk>/books/', UserBooks.as_view(), name='UserBooks'),
-    path('<int:pk>/books/<int:id>/', BookDetail.as_view(), name='UpdateBook'),
+    path('', UserList.as_view(), name='users'),
+    path('<int:pk>/books/', UserBooks.as_view(), name='user_books'),
+    path('<int:pk>/books/<int:id>/', BookDetail.as_view(), name='update_book'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

@@ -1,14 +1,29 @@
 from rest_framework import generics, viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.renderers import TemplateHTMLRenderer
+from django.shortcuts import get_object_or_404, redirect
 
 from .models import User, Book
 from .serializers import UserSerializer, BookSerializer
 
 
 class UserList(generics.ListCreateAPIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'user_list.html'
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+
+    def get(self, request):
+        queryset = User.objects.all()
+        serializer = UserSerializer()
+        return Response({'users': queryset, 'serializer': serializer})
+
+    def post(self, request, *args, **kwargs):
+        serializer = UserSerializer(data=request.data)
+        if not serializer.is_valid():
+            return Response({'serializer': serializer})
+        serializer.save()
+        return redirect('users')
 
 
 class UserBooks(generics.ListCreateAPIView):
