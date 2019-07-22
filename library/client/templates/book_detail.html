@@ -3,7 +3,7 @@
 <html><body>
 
     <h1>{{ book.title }}</h1>
-        <ul>Summary: {{ book.summary }}</ul>
+        <ul><h3>Summary:</h3> {{ book.summary }}</ul>
         <h3>
             <form method="POST">
                 {% csrf_token %}
