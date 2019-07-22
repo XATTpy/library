@@ -19,7 +19,7 @@ DATABASES = {
 }
 ```
 
-Then you need to provide initial data for models. How to do this can be found here [Django Documentation](https://docs.djangoproject.com/en/2.2/howto/initial-data/). Or you can use your data.
+Then you need to provide initial data for models. How to do can be found here [Django Documentation](https://docs.djangoproject.com/en/2.2/howto/initial-data/). Or you can use your data.
 
 # Quickstart
 
