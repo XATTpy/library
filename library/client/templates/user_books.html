@@ -1,0 +1,21 @@
+{% load rest_framework %}
+
+<html><body>
+
+    <h1>User Books:</h1>
+
+        <ul>
+            {% for book in books %}
+            <br><a href="{{ request.path }}{{ book.id }}">{{ book.title }}</a><br>
+            {% endfor %}
+        </ul>
+
+        <h3>
+            <form method="POST">
+                {% csrf_token %}
+                {% render_form serializer %}
+                <input type="submit" value="Add book">
+            </form>
+        </h3>
+
+</body></html>
