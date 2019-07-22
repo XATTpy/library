@@ -47,14 +47,21 @@ class UserBooks(generics.ListCreateAPIView):
 
 
 class BookDetail(generics.RetrieveUpdateAPIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'book_detail.html'
     serializer_class = BookSerializer
 
-    def get_object(self, *args, **kwargs):
-        return Book.objects.get(pk=self.kwargs['id'])
+    def get(self, *args, **kwargs):
+        id = self.kwargs['id']
+        book = Book.objects.get(id=id)
+        serializer = BookSerializer
+        return Response({'book': book, 'serializer': serializer})
 
-    def put(self, request, *args, **kwargs):
-        book = self.get_object(self.kwargs['id'])
+    def post(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        book = Book.objects.get(id=id)
         serializer = BookSerializer(book, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+        if not serializer.is_valid():
+            return Response({'serializer': serializer})
+        serializer.save(book=book)
+        return redirect(request.path)
